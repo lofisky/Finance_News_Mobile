@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:FinanceNewsMobile"
     Title="FinanceNewsMobile">
 
+    <!--Title="Home" removed-->
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 

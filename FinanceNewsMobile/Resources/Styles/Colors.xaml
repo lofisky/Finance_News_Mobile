@@ -17,7 +17,16 @@
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Magenta">#D600AA</Color>
     <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="BetterBlue">#4854ff</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
+    <Color x:Key="Yellow">Yellow</Color>
+    <Color x:Key="Green">Green</Color>
+    <Color x:Key="Orange">Orange</Color>
+    <Color x:Key="LightPink">LightPink</Color>
+    <Color x:Key="LightYellow">LightYellow</Color>
+    <Color x:Key="LightGreen">LightGreen</Color>
+    <Color x:Key="Red">Red</Color>
+    <Color x:Key="SeriousRed">#cf4747</Color>
 
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
