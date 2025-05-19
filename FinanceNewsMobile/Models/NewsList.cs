@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace FinanceNewsMobile.Models
 {
-    class NewsList
+    public class NewsList
     {
-        public List<News> newsList;
+        public string Status { get; set; }
+        public int TotalResults { get; set; }
+        public List<News> Articles { get; set; } = new List<News>();
 
-        public void addNews(News news)
+        public void AddNews(News news)
         {
-            newsList.Add(news);
+            Articles.Add(news);
         }
-
-        public List<News> getNewsList => newsList;
     }
 }

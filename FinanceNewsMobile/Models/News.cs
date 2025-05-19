@@ -6,30 +6,15 @@ using System.Threading.Tasks;
 
 namespace FinanceNewsMobile.Models
 {
-    class News
+    public class News
     {
-        private string sourceName;
-        private string title;
-        private string description;
-        private string url;
-        private string urlToImage;
-        private string publishedAt;
-
-        public News(string sourceName, string title, string description, string url, string urlToImage, string publishedAt)
-        {
-            this.sourceName = sourceName;
-            this.title = title;
-            this.description = description;
-            this.url = url;
-            this.urlToImage = urlToImage;
-            this.publishedAt = publishedAt;
-        }
-
-        public string SourceName => sourceName;
-        public string Title => title;
-        public string Description => description;
-        public string Url => url;
-        public string UrlToImage => urlToImage;
-        public string PublishedAt => publishedAt;
+        public Source Source { get; set; }
+        public string Author {  get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Url { get; set; }
+        public string UrlToImage { get; set; }
+        public string PublishedAt { get; set; }
+        public string Content { get; set; }
     }
 }
