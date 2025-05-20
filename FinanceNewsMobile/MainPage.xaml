@@ -25,6 +25,8 @@
                 BackgroundColor="Gray"
                 HorizontalOptions="Fill"
                 Margin="30,0" />
+
+
         </VerticalStackLayout>
     </ScrollView>
 

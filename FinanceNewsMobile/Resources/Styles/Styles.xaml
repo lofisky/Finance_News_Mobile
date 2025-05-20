@@ -191,7 +191,7 @@
 
     <Style TargetType="Label" x:Key="Headline">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SeriousRed}, Dark={StaticResource PrimaryDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SeriousRed}, Dark={StaticResource SeriousRed}}" />
         <Setter Property="FontSize" Value="42" />
         <Setter Property="HorizontalOptions" Value="Fill" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />

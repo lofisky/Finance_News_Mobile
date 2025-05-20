@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Maui.Storage;
 
 namespace FinanceNewsMobile.Services
 {
@@ -13,28 +14,24 @@ namespace FinanceNewsMobile.Services
         private const string configFileName = "config.json";
         private Config _config;
 
-        public ConfigService() {
+        public ConfigService()
+        {
             loadConfig();
         }
 
-        private void loadConfig()
+        private async Task loadConfig()
         {
             {
-                string configFilePath = Path.Combine(Environment.CurrentDirectory, "config.json");
-                if (File.Exists(configFilePath))
-                {
-                    string json = File.ReadAllText(configFilePath);
-                    _config = JsonSerializer.Deserialize<Config>(json);
-                }
-                else
-                {
-                    throw new FileNotFoundException("config.json not found!");
-                }
+                using var stream = await FileSystem.OpenAppPackageFileAsync(configFileName);
+                using var reader = new StreamReader(stream);
+                var json = await reader.ReadToEndAsync();
+
+                _config = JsonSerialize.Deserialize<Config>(json);
             }
         }
         public string GetApiKey()
         {
-            return _config?.ApiKey;
+            return _config.ApiKey;
         }
     }
 }

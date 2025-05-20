@@ -34,10 +34,7 @@ namespace FinanceNewsMobile.Services
                     return null;
                 }
                 string responseContent = await response.Content.ReadAsStringAsync();
-                var newsList = JsonSerializer.Deserialize<NewsList>(responseContent, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                var newsList = JsonSerialize.Deserialize<NewsList>(responseContent);
 
                 return newsList;
 
