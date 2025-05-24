@@ -27,6 +27,7 @@
     <Color x:Key="LightGreen">LightGreen</Color>
     <Color x:Key="Red">Red</Color>
     <Color x:Key="SeriousRed">#cf4747</Color>
+    <Color x:Key="Purple">Purple</Color>
 
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>

@@ -64,15 +64,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="config.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="NewsAPI" Version="0.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Update="Resources\Raw\config.json">
+	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  </MauiAsset>
 	</ItemGroup>
 
 </Project>

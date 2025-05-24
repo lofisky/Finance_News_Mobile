@@ -16,5 +16,18 @@ namespace FinanceNewsMobile.Models
         public string UrlToImage { get; set; }
         public string PublishedAt { get; set; }
         public string Content { get; set; }
+
+
+        public string FormattedPublishedAt
+        {
+            get
+            {
+                if (DateTime.TryParse(PublishedAt, out var dt))
+                {
+                    return dt.ToLocalTime().ToString("yyyy-MM-dd HH:mm");
+                }
+                return PublishedAt;
+            }
+        }
     }
 }
