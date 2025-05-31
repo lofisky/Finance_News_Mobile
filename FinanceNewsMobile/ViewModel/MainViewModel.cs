@@ -1,11 +1,5 @@
 ﻿using FinanceNewsMobile.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FinanceNewsMobile.Models;
 using System.Windows.Input;
 
@@ -14,7 +8,39 @@ namespace FinanceNewsMobile.ViewModel
     public class MainViewModel : BindableObject
     {
         private ApiService _apiService;
-        public List<News> NewsArticles { get; } = new List<News>();
+        public ObservableCollection<News> NewsArticles { get; } = new ObservableCollection<News>();
+        private List<News> AllNewsArticles = new List<News>();
+        private string _textSearch;
+        private CancellationTokenSource _searchCts;
+        public string TextSearch
+        {
+            get => _textSearch;
+            set
+            {
+                _textSearch = value;
+                OnPropertyChanged();
+                DebouncedSearch();
+            }
+        }
+
+        private async void DebouncedSearch()
+        {
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+            var token = _searchCts.Token;
+
+            try
+            {
+                await Task.Delay(700, token);
+                if (token.IsCancellationRequested) return;
+
+                if (!string.IsNullOrEmpty(_textSearch)) await Task.Run(() => OnSearchCommand());
+                else OnEmptySearchCommand.Execute(null);
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }
 
         private bool _isBusy;
         public bool IsBusy
@@ -28,11 +54,11 @@ namespace FinanceNewsMobile.ViewModel
         }
         public ICommand LoadNewsCommand { get; }
         public ICommand OpenUrlCommand { get; }
+        public ICommand OnEmptySearchCommand { get; }
 
         public MainViewModel()
         {
             LoadNewsCommand = new Command(async () => await LoadNewsAsync());
-
             OpenUrlCommand = new Command<string>(async (url) =>
             {
                 if (!string.IsNullOrWhiteSpace(url))
@@ -48,8 +74,28 @@ namespace FinanceNewsMobile.ViewModel
                 }
 
             });
+            OnEmptySearchCommand = new Command(async () => await LoadNewsAsync());
             InitializeAsync();
         }
+
+        private void OnSearchCommand()
+        {
+            var foundNews = AllNewsArticles.Where(found =>
+                found != null &&
+                (
+                    (!string.IsNullOrEmpty(found.Title) && found.Title.Contains(TextSearch, StringComparison.OrdinalIgnoreCase)) || 
+                    (!string.IsNullOrEmpty(found.Description) && found.Description.Contains(TextSearch, StringComparison.OrdinalIgnoreCase))
+                )
+            ).ToList();
+
+            NewsArticles.Clear();
+            foreach (var item in foundNews)
+            {
+                NewsArticles.Add(item);
+
+            }
+        }
+
 
         public async Task InitializeAsync()
         {
@@ -90,19 +136,22 @@ namespace FinanceNewsMobile.ViewModel
             }
 
             NewsArticles.Clear();
+            AllNewsArticles.Clear();
 
             if (newsList?.Articles != null)
             {
                 var sortedList = newsList.Articles
                     .Where(a => DateTime.TryParse(a.PublishedAt, out _))
                     .OrderByDescending(a => DateTime.Parse(a.PublishedAt))
+                    .GroupBy(x => x.Url?.Trim().ToLowerInvariant())
+                    .Select(y => y.First())
                     .ToList();
+
+                AllNewsArticles.AddRange(sortedList);
 
                 foreach (var article in sortedList)
                 {
-                    {
-                        NewsArticles.Add(article);
-                    }
+                    NewsArticles.Add(article);
                 }
             }
             IsBusy = false;

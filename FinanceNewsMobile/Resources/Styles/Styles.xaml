@@ -144,6 +144,25 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
     </Style>
 
+    <Style TargetType="BoxView" x:Key="NewsBoxView">
+        <Setter Property="HeightRequest" Value="2" />
+        <Setter Property="BackgroundColor" Value="Gray" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Margin" Value="30,0" />
+    </Style>
+
+    <Style TargetType="Image" x:Key="NewsImage">
+        <Setter Property="Aspect" Value="AspectFill" />
+        <Setter Property="HeightRequest" Value="150" />
+    </Style>
+
+    <Style TargetType="Frame" x:Key="DataFrame">
+        <Setter Property="BorderColor" Value="Lavender" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="0,5" />
+        <Setter Property="Padding" Value="10" />
+    </Style>
+
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
         <Setter Property="BorderColor" Value="Transparent"/>
@@ -184,6 +203,7 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+    
 
     <Style TargetType="Span">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
@@ -197,11 +217,28 @@
         <Setter Property="HorizontalTextAlignment" Value="Center" />
     </Style>
 
+    <Style TargetType="Label" x:Key="PublishedAtLabel">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="TextColor" Value="Grey" />
+        <Setter Property="HorizontalOptions" Value="End" />
+    </Style>
+
     <Style TargetType="Label" x:Key="SubHeadline">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource MidnightBlue}, Dark={StaticResource White}}" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TitleLabel">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="MaxLines" Value="8" />
+    </Style>
+    
+    <Style TargetType="Span" x:Key="LinkSpan">
+        <Setter Property="TextColor" Value="Blue"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
     </Style>
 
     <Style TargetType="ListView">

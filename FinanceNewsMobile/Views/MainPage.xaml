@@ -17,49 +17,41 @@
 
         <CollectionView.Header>
             <VerticalStackLayout Spacing="25">
-
                 <Label  
                 Text="Finance News" 
                 Style="{StaticResource Headline}"  
                 SemanticProperties.HeadingLevel="Level1" />
+                
+                <SearchBar Text="{Binding TextSearch}" Placeholder="Search news..."/>
 
                 <Label  
                 Text="Latest Updates"  
                 Style="{StaticResource SubHeadline}"  
                 SemanticProperties.HeadingLevel="Level2"  
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Latest Updates" />
 
                 <BoxView
-                HeightRequest="2"
-                BackgroundColor="Gray"
-                HorizontalOptions="Fill"
-                Margin="30,0" />
+                Style="{StaticResource NewsBoxView}"/>
             </VerticalStackLayout>
         </CollectionView.Header>
 
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Frame BorderColor="Lavender" CornerRadius="10" Margin="0,5" Padding="10">
+                <Frame Style="{StaticResource DataFrame}">
                     <VerticalStackLayout Spacing="10">
                         <Image 
                             Source="{Binding UrlToImage}"
-                            Aspect="AspectFill"
-                            HeightRequest="150"
-                            />
+                            Style="{StaticResource NewsImage}"/>
                         <Label 
                             Text="{Binding Title}" 
-                            FontAttributes="Bold" 
-                            FontSize="18" 
-                            LineBreakMode="TailTruncation" 
-                            MaxLines="8" />
+                            Style="{StaticResource TitleLabel}"/>
                         <Label FontSize="14">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="{Binding Description}"/>
                                     <Span x:Name="ClickableSpan"
-                                          Text=" Read More"
-                                      TextColor="Blue"
-                                      FontAttributes="Bold">
+                                          Style="{StaticResource LinkSpan}"
+                                          Text=" Read More">
                                         <Span.GestureRecognizers>
                                             <TapGestureRecognizer 
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenUrlCommand}"
@@ -72,10 +64,8 @@
                             </Label.FormattedText>
                         </Label>
                         <Label 
-                            Text="{Binding FormattedPublishedAt}" 
-                            FontSize="11" 
-                            TextColor="Gray" 
-                            HorizontalOptions="End" />
+                            Style="{StaticResource PublishedAtLabel}"
+                            Text="{Binding FormattedPublishedAt}"/>
                     </VerticalStackLayout>
                 </Frame>
             </DataTemplate>
