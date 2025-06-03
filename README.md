@@ -28,6 +28,7 @@ App Icon:
 </p>
 
 ## Tech Stack
+- **Framework:** .NET MAUI
 - **Front-End:** XAML
 - **Back-End:** C#
 
