@@ -19,7 +19,7 @@ namespace FinanceNewsMobile.Services
                 var json = await reader.ReadToEndAsync();
 
                 _config = JsonSerialize.Deserialize<Config>(json);
-                System.Diagnostics.Debug.WriteLine($"info:Config Loaded: {_config?.ApiKey}");
+                System.Diagnostics.Debug.WriteLine($"info:Config Loaded");
             }
             catch (Exception ex)
             {
