@@ -10,7 +10,6 @@ namespace FinanceNewsMobile.Services
         public ConfigService()
         {
         }
-
         public async Task LoadConfigAsync()
         {
             try

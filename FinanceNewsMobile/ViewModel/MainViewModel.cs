@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using FinanceNewsMobile.Models;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace FinanceNewsMobile.ViewModel
 {
@@ -12,6 +13,7 @@ namespace FinanceNewsMobile.ViewModel
         private List<News> AllNewsArticles = new List<News>();
         private string _textSearch;
         private CancellationTokenSource _searchCts;
+        private bool _isBusy;
         public string TextSearch
         {
             get => _textSearch;
@@ -20,6 +22,15 @@ namespace FinanceNewsMobile.ViewModel
                 _textSearch = value;
                 OnPropertyChanged();
                 DebouncedSearch();
+            }
+        }
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged();
             }
         }
 
@@ -42,16 +53,6 @@ namespace FinanceNewsMobile.ViewModel
             }
         }
 
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                _isBusy = value;
-                OnPropertyChanged();
-            }
-        }
         public ICommand LoadNewsCommand { get; }
         public ICommand OpenUrlCommand { get; }
         public ICommand OnEmptySearchCommand { get; }
@@ -96,7 +97,6 @@ namespace FinanceNewsMobile.ViewModel
             }
         }
 
-
         public async Task InitializeAsync()
         {
             IsBusy = true;
@@ -128,11 +128,11 @@ namespace FinanceNewsMobile.ViewModel
 
             if (newsList == null)
             {
-                System.Diagnostics.Debug.WriteLine("info: News list is null");
+                Debug.WriteLine("info: News list is null");
             }
             else if (newsList.Articles == null || newsList.Articles.Count == 0)
             {
-                System.Diagnostics.Debug.WriteLine("info: No articles found");
+                Debug.WriteLine("info: No articles found");
             }
 
             NewsArticles.Clear();
@@ -141,8 +141,6 @@ namespace FinanceNewsMobile.ViewModel
             if (newsList?.Articles != null)
             {
                 var sortedList = newsList.Articles
-                    .Where(a => DateTime.TryParse(a.PublishedAt, out _))
-                    .OrderByDescending(a => DateTime.Parse(a.PublishedAt))
                     .GroupBy(x => x.Url?.Trim().ToLowerInvariant())
                     .Select(y => y.First())
                     .ToList();
@@ -154,6 +152,9 @@ namespace FinanceNewsMobile.ViewModel
                     NewsArticles.Add(article);
                 }
             }
+            Debug.WriteLine($"AllNews {AllNewsArticles}");
+            Debug.WriteLine($"NewsList {NewsArticles}");
+
             IsBusy = false;
         }
     }

@@ -144,6 +144,14 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
     </Style>
 
+    <Style TargetType="ActivityIndicator" x:Key="ActivityIcon">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="Color" Value="Black" />
+        <Setter Property="WidthRequest" Value="50" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+
     <Style TargetType="BoxView" x:Key="NewsBoxView">
         <Setter Property="HeightRequest" Value="2" />
         <Setter Property="BackgroundColor" Value="Gray" />
@@ -156,11 +164,14 @@
         <Setter Property="HeightRequest" Value="150" />
     </Style>
 
-    <Style TargetType="Frame" x:Key="DataFrame">
-        <Setter Property="BorderColor" Value="Lavender" />
-        <Setter Property="CornerRadius" Value="10" />
+    <Style TargetType="Border" x:Key="DataFrame">
+        <Setter Property="Stroke" Value="Lavender" />
+        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Margin" Value="0,5" />
         <Setter Property="Padding" Value="10" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="10"/>
+        </Setter> 
     </Style>
 
     <Style TargetType="ImageButton">

@@ -1,55 +1,40 @@
 ﻿using FinanceNewsMobile.Models;
-using System.Diagnostics;
 using System.Net.Http.Headers;
-
 
 namespace FinanceNewsMobile.Services
 {
-    class ApiService
-    {
+    class ApiService {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
 
         public ApiService(string apiKey)
         {
             _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("FinanceNewsApp", "1.0"));
-            _apiKey = apiKey ?? throw new Exception("API Key missing in config");
+            _httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("FinanceNewsMobile", "1.0"));
+            _apiKey = apiKey ?? throw new Exception("Cannot find apiKey");
         }
 
         public async Task<NewsList> GetNewsAsync()
         {
-            string url = $"https://newsapi.org/v2/everything?q=finance&apiKey={_apiKey}";
-
+            string url = $"https://newsapi.org/v2/everything?q=finance&sortBy=publishedAt&apiKey={_apiKey}";
             try
             {
-                Debug.WriteLine("Starting news api call..");
-                HttpResponseMessage response = await _httpClient.GetAsync(url);
-                Debug.WriteLine($"API call complete with status: {response.StatusCode}");
-
-                System.Diagnostics.Debug.WriteLine($"info: Request URL: {url}");
-                System.Diagnostics.Debug.WriteLine($"info: Response Status Code: {response.StatusCode}");
-
-                if (!response.IsSuccessStatusCode){
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    System.Diagnostics.Debug.WriteLine($"info: Error response content: {errorContent}");
+                HttpResponseMessage json = await _httpClient.GetAsync(url);
+                if (!json.IsSuccessStatusCode)
+                {
+                    string errorContent = await json.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"Http request failed: {errorContent}");
                     return null;
                 }
-
-                string responseContent = await response.Content.ReadAsStringAsync();
-                System.Diagnostics.Debug.WriteLine($"info: Response content: {responseContent}");
-
-                var newsList = JsonSerialize.Deserialize<NewsList>(responseContent);
-
+                string response = await json.Content.ReadAsStringAsync();
+                var newsList = JsonSerialize.Deserialize<NewsList>(response);
                 return newsList;
-
-
+                
             }
             catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine($"info: Error fetching news: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error fetching news: {ex.Message}");
                 return null;
             }
-            
         }
     }
 }

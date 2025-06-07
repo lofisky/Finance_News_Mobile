@@ -9,66 +9,73 @@
         <viewmodel:MainViewModel/>
     </ContentPage.BindingContext>
 
-    <CollectionView
+    <Grid RowDefinitions="Auto,*">
+        <CollectionView
                 ItemsSource="{Binding NewsArticles}"
                 x:Name="NewsCollectionView"
                 Margin="0,10"
-                VerticalOptions="FillAndExpand">
+                Grid.Row="1">
 
-        <CollectionView.Header>
-            <VerticalStackLayout Spacing="25">
-                <Label  
+            <CollectionView.Header>
+                <VerticalStackLayout Spacing="25">
+                    <Label  
                 Text="Finance News" 
                 Style="{StaticResource Headline}"  
                 SemanticProperties.HeadingLevel="Level1" />
-                
-                <SearchBar Text="{Binding TextSearch}" Placeholder="Search news..."/>
 
-                <Label  
+                    <SearchBar Text="{Binding TextSearch}" Placeholder="Search news..."/>
+
+                    <Label  
                 Text="Latest Updates"  
                 Style="{StaticResource SubHeadline}"  
                 SemanticProperties.HeadingLevel="Level2"  
                 SemanticProperties.Description="Latest Updates" />
 
-                <BoxView
-                Style="{StaticResource NewsBoxView}"/>
-            </VerticalStackLayout>
-        </CollectionView.Header>
+                    <ActivityIndicator
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    Style="{StaticResource ActivityIcon}"/>
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Style="{StaticResource DataFrame}">
-                    <VerticalStackLayout Spacing="10">
-                        <Image 
+                    <BoxView
+                Style="{StaticResource NewsBoxView}"/>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource DataFrame}">
+                        <VerticalStackLayout Spacing="10">
+                            <Image 
                             Source="{Binding UrlToImage}"
                             Style="{StaticResource NewsImage}"/>
-                        <Label 
+                            <Label 
                             Text="{Binding Title}" 
                             Style="{StaticResource TitleLabel}"/>
-                        <Label FontSize="14">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Description}"/>
-                                    <Span x:Name="ClickableSpan"
+                            <Label FontSize="14">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Description}"/>
+                                        <Span x:Name="ClickableSpan"
                                           Style="{StaticResource LinkSpan}"
                                           Text=" Read More">
-                                        <Span.GestureRecognizers>
-                                            <TapGestureRecognizer 
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer 
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenUrlCommand}"
                                                 CommandParameter="{Binding Url}"
                                                 Tapped="OnUrlTapped">
-                                            </TapGestureRecognizer>
-                                        </Span.GestureRecognizers>
-                                    </Span>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label 
+                                                </TapGestureRecognizer>
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label 
                             Style="{StaticResource PublishedAtLabel}"
                             Text="{Binding FormattedPublishedAt}"/>
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>
