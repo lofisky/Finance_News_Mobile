@@ -14,6 +14,7 @@ namespace FinanceNewsMobile.ViewModel
         private string _textSearch;
         private CancellationTokenSource _searchCts;
         private bool _isBusy;
+        private bool _isEmpty;
         public string TextSearch
         {
             get => _textSearch;
@@ -30,6 +31,16 @@ namespace FinanceNewsMobile.ViewModel
             set
             {
                 _isBusy = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsEmpty
+        {
+            get => _isEmpty;
+            set
+            {
+                _isEmpty = value;
                 OnPropertyChanged();
             }
         }
@@ -70,7 +81,7 @@ namespace FinanceNewsMobile.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine($"failed to open url {ex.Message}");
+                        Debug.WriteLine($"failed to open url {ex.Message}");
                     }
                 }
 
@@ -93,8 +104,8 @@ namespace FinanceNewsMobile.ViewModel
             foreach (var item in foundNews)
             {
                 NewsArticles.Add(item);
-
             }
+            IsEmpty = NewsArticles.Count == 0;
         }
 
         public async Task InitializeAsync()
@@ -152,8 +163,7 @@ namespace FinanceNewsMobile.ViewModel
                     NewsArticles.Add(article);
                 }
             }
-            Debug.WriteLine($"AllNews {AllNewsArticles}");
-            Debug.WriteLine($"NewsList {NewsArticles}");
+            IsEmpty = NewsArticles.Count == 0;
 
             IsBusy = false;
         }
